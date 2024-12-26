@@ -1,0 +1,121 @@
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+legend,
+input,
+textarea,
+button,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  background-color: antiquewhite;
+
+}
+
+.head1 {
+  background-color: brown;
+  width: 100%;
+  height: 400px;
+  background: url(../images/1.jpg);
+  background-size: cover;
+}
+
+.name_beh>img {
+  width: 512px;
+  height: 180px;
+  margin-left: 334px;
+  margin-top: 60px;
+}
+
+.name_mg>img {
+  width: 278px;
+  height: 192px;
+  margin-left: 853px;
+  margin-top: -193px;
+
+}
+
+
+
+.name_bu>img {
+  width: 220px;
+  height: 220px;
+  margin-left: 1118px;
+  margin-top: -150px;
+}
+
+.name_luo>img {
+  width: 220px;
+  height: 220px;
+  margin-left: 1291px;
+  margin-top: -150px;
+
+}
+
+.titel_qmw {
+  margin: 0;
+  padding: 0;
+  background-color: #antiquewhite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 139px;
+}
+
+.titel_qmw>h1 {
+  /* font-family: 微软雅黑;
+  /* text-align: center; */
+  /* margin-left: 20px;
+  animation: qmw cubic-bezier(0.23, 1, 0.320, 1) infinite;
+  color: #ffffff;
+  margin-top: 20px;
+  border-color: black;
+  border-right: 5px; */
+  color: #000;
+  font-family: 微软雅黑;
+  margin: 0;
+  padding: 0;
+  font-size: 8rem;
+  letter-spacing: -0.3rem;
+  position: relative;
+
+
+}
+
+
+.titel_qmw>h1::after {
+  content: attr(data-text);
+  color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  clip-path: circle(100px at 0% 50%);
+  animation: movelight_qmu 8s infinite;
+  background: url(../images/d93196acf17d0d28c19d.jpg) center;
+  background-clip: text;
+}
+@keyframes movelight_qmu {
+  0%{ clip-path: circle(100px at 0% 50%);}
+  50%{ clip-path: circle(100px at 100% 50%);}
+  100%{ clip-path: circle(100px at 0% 50%);}
