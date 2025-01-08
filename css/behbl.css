@@ -83,7 +83,7 @@ body {
   min-height: 139px;
 }
 
-.titel_qmw>h1 {
+.titel_qmw>h3{
   /* font-family: 微软雅黑;
   /* text-align: center; */
   /* margin-left: 20px;
@@ -96,7 +96,7 @@ body {
   font-family: 微软雅黑;
   margin: 0;
   padding: 0;
-  font-size: 8rem;
+  font-size: 4rem;
   letter-spacing: -0.3rem;
   position: relative;
 
@@ -104,7 +104,7 @@ body {
 }
 
 
-.titel_qmw>h1::after {
+.titel_qmw>h3::after {
   content: attr(data-text);
   color: transparent;
   position: absolute;
