@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <title>图片展示网站</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #2ecc71;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 1rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .image-upload-label {
+            background-color: #3498db;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .image-upload-label:hover {
+            background-color: #2980b9;
+        }
+
+        .image-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .image-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: scale(1.05);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .delete-button,
+        .download-button {
+            position: absolute;
+            top: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button {
+            right: 0.5rem;
+        }
+
+        .download-button {
+            left: 0.5rem;
+        }
+
+        .delete-button:hover,
+        .download-button:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-button {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>请输入密码</h2>
+            <input type="password" id="passwordInput" class="login-input" placeholder="密码">
+            <button class="login-button" onclick="checkPassword()">登录</button>
+        </div>
+    </div>
+    <header>
+        图片展示网站
+    </header>
+    <main id="mainContent" style="display: none;">
+        <!-- 展示区 1 -->
+        <div class="section">
+            <h2>展示区 1</h2>
+            <input type="file" id="imageInput1" class="hidden" multiple accept="image/*">
+            <label for="imageInput1" class="image-upload-label">
+                <i class="fa-solid fa-upload"></i> 导入图片
+            </label>
+            <div class="image-container" id="imageContainer1"></div>
+        </div>
+        <!-- 展示区 2 -->
+        <div class="section">
+            <h2>展示区 2</h2>
+            <input type="file" id="imageInput2" class="hidden" multiple accept="image/*">
+            <label for="imageInput2" class="image-upload-label">
+                <i class="fa-solid fa-upload"></i> 导入图片
+            </label>
+            <div class="image-container" id="imageContainer2"></div>
+        </div>
+        <!-- 展示区 3 -->
+        <div class="section">
+            <h2>展示区 3</h2>
+            <input type="file" id="imageInput3" class="hidden" multiple accept="image/*">
+            <label for="imageInput3" class="image-upload-label">
+                <i class="fa-solid fa-upload"></i> 导入图片
+            </label>
+            <div class="image-container" id="imageContainer3"></div>
+        </div>
+        <!-- 展示区 4 -->
+        <div class="section">
+            <h2>展示区 4</h2>
+            <input type="file" id="imageInput4" class="hidden" multiple accept="image/*">
+            <label for="imageInput4" class="image-upload-label">
+                <i class="fa-solid fa-upload"></i> 导入图片
+            </label>
+            <div class="image-container" id="imageContainer4"></div>
+        </div>
+        <!-- 展示区 5 -->
+        <div class="section">
+            <h2>展示区 5</h2>
+            <input type="file" id="imageInput5" class="hidden" multiple accept="image/*">
+            <label for="imageInput5" class="image-upload-label">
+                <i class="fa-solid fa-upload"></i> 导入图片
+            </label>
+            <div class="image-container" id="imageContainer5"></div>
+        </div>
+    </main>
+    <footer id="footerContent" style="display: none;">
+        &copy; 2025 图片展示网站
+    </footer>
+    <script>
+        const githubToken = 'wj212121！';
+        const repoOwner = '0022AA5';
+        const repoName = 'behbl';
+        const correctPassword = '123456';
+        const loginModal = document.getElementById('loginModal');
+        const mainContent = document.getElementById('mainContent');
+        const footerContent = document.getElementById('footerContent');
+
+        window.onload = function () {
+            loginModal.style.display = 'flex';
+        };
+
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const enteredPassword = passwordInput.value;
+            if (enteredPassword === correctPassword) {
+                loginModal.style.display = 'none';
+                mainContent.style.display = 'block';
+                footerContent.style.display = 'block';
+            } else {
+                alert('密码错误，请重试。');
+            }
+        }
+
+        function setupImageUpload(imageInputId, imageContainerId) {
+            const imageInput = document.getElementById(imageInputId);
+            const imageContainer = document.getElementById(imageContainerId);
+
+            imageInput.addEventListener('change', async function () {
+                const files = this.files;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = async function (e) {
+                            const base64Data = e.target.result.split(',')[1];
+                            const fileName = file.name;
+                            try {
+                                await uploadToGitHub(fileName, base64Data);
+                                const img = document.createElement('img');
+                                const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${fileName}`;
+                                img.src = imageUrl;
+                                const imageItem = document.createElement('div');
+                                imageItem.classList.add('image-item');
+
+                                const deleteButton = document.createElement('button');
+                                deleteButton.classList.add('delete-button');
+                                deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                                deleteButton.addEventListener('click', function () {
+                                    imageContainer.removeChild(imageItem);
+                                });
+
+                                const downloadButton = document.createElement('a');
+                                downloadButton.classList.add('download-button');
+                                downloadButton.innerHTML = '<i class="fa-solid fa-download"></i>';
+                                downloadButton.href = imageUrl;
+                                downloadButton.download = fileName;
+
+                                imageItem.appendChild(img);
+                                imageItem.appendChild(deleteButton);
+                                imageItem.appendChild(downloadButton);
+                                imageContainer.appendChild(imageItem);
+                            } catch (error) {
+                                console.error('上传到 GitHub 时出错:', error);
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+        }
+
+        setupImageUpload('imageInput1', 'imageContainer1');
+        setupImageUpload('imageInput2', 'imageContainer2');
+        setupImageUpload('imageInput3', 'imageContainer3');
+        setupImageUpload('imageInput4', 'imageContainer4');
+        setupImageUpload('imageInput5', 'imageContainer5');
+
+        async function uploadToGitHub(fileName, base64Data) {
+            const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${fileName}`;
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `Upload ${fileName}`,
+                    content: base64Data
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`GitHub API 请求失败: ${response.status} ${response.statusText}`);
+            }
+        }
+    </script>
+</body>
+
+</html>    
